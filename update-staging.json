@@ -1,0 +1,11 @@
+{
+  "version": "0.1.28-staging.2",
+  "notes": "oort 0.1.28 스테이징 증거 빌드 - 업데이트 갱신 시험용(라이브 채널 아님)",
+  "pub_date": "2026-10-16T11:22:25Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUTlpTbEgxMHR2ZWhJeFJOMjVublhIVzlBLytqVTd6eDhrYU9rVE9IMkZhUEdudkJJNWhIb2ZlRFRsTnpkbkhIYmVOY0NDQlZZQldNTCsycHlhdUxSdlF4MHI2bHc1M2dVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMTQ5NTAyCWZpbGU6b29ydC0wLjEuMjgtc3RhZ2luZy4yLWRhcndpbi1hYXJjaDY0LmFwcC50YXIuZ3oKYjhWcWErMGJ1eUJhaVlRTU43bjZibWQvMGpzT2hhVmJ1bi9GNmtERFZZNkZpWU1pVnVhSHgweE1EUDVNQ2ZuTzd6Nk1aSGd4QS9ndDhnNklzV1EzQ1E9PQo=",
+      "url": "https://yeomyeonggeori.github.io/momo-alpha/staging/oort-0.1.28-staging.2-darwin-aarch64.app.tar.gz"
+    }
+  }
+}
