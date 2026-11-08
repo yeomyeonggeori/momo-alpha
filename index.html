@@ -4,426 +4,165 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>momo internal alpha</title>
+<meta name="description" content="에이전트가 멤버로 함께 일하는 팀 메신저. Mac 앱 내려받기와 설치 안내.">
+<title>oort · Mac 앱</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23c2410c' fill-rule='evenodd'%3E%3Cpath d='M18.59 10.46A8 8 0 0 1 7.32 20.1A0.5 0.5 0 0 0 6.91 20.08L3.6 21.38A0.75 0.75 0 0 1 2.62 20.4L3.92 17.09A0.5 0.5 0 0 0 3.9 16.68A8 8 0 0 1 13.54 5.41A4.5 4.5 0 0 0 18.59 10.46ZM15 13A4 4 0 1 0 7 13A4 4 0 1 0 15 13Z'/%3E%3Cpath d='M21 6A3 3 0 1 1 15 6A3 3 0 1 1 21 6Z'/%3E%3C/g%3E%3C/svg%3E">
 <style>
-/* ==========================================================================
-   momo alpha 배포 페이지. 아이덴티티 = 여명(Dawn): 페이지가 위(밤)에서
-   아래(동트는 지평선)로 흐르는 한 장의 새벽 하늘.
-   자급자족 단일 파일(외부 폰트/CDN 없음), 시스템 폰트, noindex 유지.
-   ========================================================================== */
+/* oort 팀 내려받기 페이지(약식, 2026-11-08). 색은 clients/web/src/design/tokens.css의
+   canvas·surface·ink·signal 토큰을 옮겨 왔다. 외부 글꼴·스크립트 없음, 광고하지 않는 팀 페이지라 noindex. */
 :root {
   color-scheme: light dark;
-  /* 여명 팔레트 */
-  --night: #0b1026;         /* 밤하늘 */
-  --night-2: #141b3f;       /* 박명 */
-  --dawn-coral: #ff7a59;    /* 지평선 산호 */
-  --dawn-amber: #ffb35c;    /* 지평선 호박 */
-  --star: rgba(255,255,255,.85);
-  /* 본문(라이트 = 동튼 직후) */
-  --paper: #faf7f2;
-  --ink: #23212c;
-  --ink-2: #6b6878;
-  --card: #ffffff;
-  --line: rgba(35,33,44,.12);
-  --code-bg: rgba(35,33,44,.06);
-  --accent: #c2410c;        /* 라이트 본문 위 액센트(AA 확보용 진한 산호) */
-  --focus: #ff7a59;
+  --canvas-top: #f7eadb;
+  --canvas-mid: #efedea;
+  --canvas-bottom: #e2e9f3;
+  --surface: #fffefc;
+  --surface-muted: #f3f1ee;
+  --line: #e7e4df;
+  --ink: #16171b;
+  --ink-muted: #5a5c64;
+  --signal: #c2410c;
+  --signal-text: #af3908;
+  --on-signal: #fffefc;
+  --signal-soft: #fbe9de;
+  --mark: #a54c08;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #0e1330;
-    --ink: #eceaf4;
-    --ink-2: #a3a0b5;
-    --card: #171d42;
-    --line: rgba(236,234,244,.14);
-    --code-bg: rgba(236,234,244,.08);
-    --accent: #ffb35c;      /* 다크 본문 위에서는 호박색이 AA */
+    --canvas-top: #231d1b;
+    --canvas-mid: #171a20;
+    --canvas-bottom: #0f141c;
+    --surface: #1b1e25;
+    --surface-muted: #252933;
+    --line: #2c3039;
+    --ink: #f1f1f3;
+    --ink-muted: #a4a7b0;
+    --signal: #ff8a4c;
+    --signal-text: #ff9a62;
+    --on-signal: #16171b;
+    --signal-soft: #392418;
+    --mark: #f0a850;
   }
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { background-color: var(--canvas-bottom); }
+html, body { margin: 0; }
 body {
-  margin: 0;
-  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
-  background: var(--paper);
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--canvas-top) 0%, var(--canvas-mid) 46%, var(--canvas-bottom) 100%);
+  background-color: var(--canvas-mid);
   color: var(--ink);
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
-code, pre {
-  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
-  font-size: .86em;
+a { color: var(--signal-text); text-underline-offset: 2px; }
+a:focus-visible, .button:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 10px; }
+code { font: 13px/1.4 ui-monospace, "SF Mono", Menlo, monospace; background: var(--surface-muted); border-radius: 6px; padding: 1px 6px; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 0; }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; font-weight: 650; font-size: 17px; letter-spacing: -0.01em; }
+.brand svg { width: 24px; height: 24px; }
+.mark { fill: var(--mark); }
+.top-link { font-size: 14px; color: var(--ink-muted); text-decoration: none; }
+.top-link:hover { color: var(--ink); text-decoration: underline; }
+.hero { padding: 56px 0 40px; text-align: center; }
+.hero-mark { width: 64px; height: 64px; margin: 0 auto 20px; display: block; }
+h1 { margin: 0; font-size: 34px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700; }
+.lead { margin: 12px auto 0; max-width: 30em; color: var(--ink-muted); font-size: 17px; }
+.actions { margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 24px; border-radius: 12px;
+  background: var(--signal); color: var(--on-signal);
+  font-size: 16px; font-weight: 650; text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 6px 18px -8px rgba(194,65,12,.55);
 }
-code { background: var(--code-bg); border-radius: 6px; padding: .12em .4em; word-break: break-all; }
-pre { background: var(--code-bg); border-radius: 10px; padding: .9em 1.1em; overflow-x: auto; }
-a { color: var(--accent); }
-a:focus-visible, button:focus-visible, .btn:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-  border-radius: 8px;
+.button:hover { filter: brightness(1.05); }
+.button svg { width: 18px; height: 18px; fill: currentColor; }
+.actions > * { max-width: 100%; }
+.meta { margin: 0; font-size: 13px; color: var(--ink-muted); }
+.alt { margin: 6px 0 0; font-size: 14px; color: var(--ink-muted); }
+section.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin: 0 0 16px; }
+h2 { margin: 0 0 16px; font-size: 17px; line-height: 1.4; }
+ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: 16px; }
+ol.steps li { counter-increment: step; display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+ol.steps li > span { min-width: 0; }
+ol.steps li::before {
+  content: counter(step); display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 999px; background: var(--signal-soft); color: var(--signal-text);
+  font-weight: 700; font-size: 14px;
 }
-.wrap { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
-
-/* ---- 스티키 나브 ------------------------------------------------------- */
-.nav {
-  position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--night) 88%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-.nav-inner {
-  max-width: 960px; margin: 0 auto; padding: .65rem 1.5rem;
-  display: flex; align-items: center; gap: 1.1rem;
-}
-.wordmark {
-  font-weight: 800; font-size: 1.15rem; letter-spacing: -.01em;
-  color: #fff; text-decoration: none;
-}
-.wordmark .dot { color: var(--dawn-amber); }
-.nav-links { display: flex; gap: 1rem; margin-left: auto; align-items: center; }
-.nav-links a { color: rgba(255,255,255,.78); text-decoration: none; font-size: .92rem; }
-.nav-links a:hover { color: #fff; }
-.nav .btn-mini {
-  background: linear-gradient(100deg, var(--dawn-coral), var(--dawn-amber));
-  color: #241203; font-weight: 700; font-size: .88rem;
-  padding: .42em .95em; border-radius: 999px; text-decoration: none;
-  white-space: nowrap;
-}
-@media (max-width: 640px) { .nav-links a.hide-sm { display: none; } }
-
-/* ---- 히어로: 밤하늘 ------------------------------------------------------ */
-.hero {
-  position: relative; overflow: hidden;
-  background:
-    radial-gradient(120% 90% at 50% 115%, rgba(255,122,89,.34) 0%, rgba(255,179,92,.16) 32%, transparent 58%),
-    linear-gradient(180deg, var(--night) 0%, var(--night-2) 78%, #2a2153 100%);
-  color: #fff;
-  padding: 4.5rem 0 5.5rem;
-}
-.hero .wrap { position: relative; z-index: 2; }
-/* 별: 배경 장식(장식임을 aria-hidden으로 명시) */
-.stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.stars i {
-  position: absolute; width: 2px; height: 2px; border-radius: 50%;
-  background: var(--star); opacity: .5;
-}
-.stars i:nth-child(1) { left: 8%;  top: 18%; }
-.stars i:nth-child(2) { left: 22%; top: 64%; opacity: .3; }
-.stars i:nth-child(3) { left: 31%; top: 30%; width: 3px; height: 3px; }
-.stars i:nth-child(4) { left: 47%; top: 12%; opacity: .35; }
-.stars i:nth-child(5) { left: 58%; top: 42%; }
-.stars i:nth-child(6) { left: 71%; top: 20%; width: 3px; height: 3px; opacity: .6; }
-.stars i:nth-child(7) { left: 83%; top: 55%; opacity: .3; }
-.stars i:nth-child(8) { left: 92%; top: 26%; }
-.stars i:nth-child(9) { left: 15%; top: 82%; opacity: .25; }
-.stars i:nth-child(10){ left: 66%; top: 76%; opacity: .3; }
-
-.hero-badge {
-  display: inline-block; font-size: .8rem; font-weight: 700;
-  color: var(--dawn-amber); border: 1px solid rgba(255,179,92,.45);
-  border-radius: 999px; padding: .2em .85em; margin-bottom: 1.1rem;
-  letter-spacing: .02em;
-}
-.hero h1 {
-  font-size: clamp(2rem, 5.5vw, 3.2rem); line-height: 1.18;
-  letter-spacing: -.02em; margin: 0 0 .8rem; font-weight: 800;
-}
-.hero h1 em {
-  font-style: normal;
-  background: linear-gradient(100deg, var(--dawn-coral), var(--dawn-amber));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.hero p.lede {
-  font-size: 1.08rem; color: rgba(255,255,255,.82);
-  max-width: 34em; margin: 0 0 1.8rem;
-}
-.cta { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
-.btn {
-  display: inline-block; text-decoration: none; font-weight: 700;
-  padding: .78em 1.5em; border-radius: 12px; font-size: 1rem;
-}
-.btn-primary {
-  background: linear-gradient(100deg, var(--dawn-coral), var(--dawn-amber));
-  color: #241203;
-  box-shadow: 0 6px 24px rgba(255,122,89,.35);
-}
-.btn-primary:hover { filter: brightness(1.06); }
-.btn-ghost {
-  color: #fff; border: 1.5px solid rgba(255,255,255,.35);
-}
-.btn-ghost:hover { border-color: rgba(255,255,255,.7); }
-.hero .meta { margin-top: 1rem; font-size: .88rem; color: rgba(255,255,255,.6); }
-.hero .meta code { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
-
-/* ---- 히어로 대화 조각: 제품 진실 그대로의 미니 타임라인 ------------------- */
-.chat-float { margin-top: 3rem; display: grid; gap: .9rem; max-width: 560px; }
-.bubble {
-  display: flex; gap: .7rem; align-items: flex-start;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 14px; padding: .8rem 1rem;
-  backdrop-filter: blur(6px);
-  animation: floaty 7s ease-in-out infinite;
-}
-.bubble:nth-child(2) { animation-delay: 1.4s; margin-left: 2.2rem; }
-.bubble:nth-child(3) { animation-delay: 2.8s; margin-left: 1rem; }
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-@media (prefers-reduced-motion: reduce) { .bubble { animation: none; } }
-.avatar {
-  flex: none; width: 34px; height: 34px; border-radius: 10px;
-  display: grid; place-items: center; font-size: .78rem; font-weight: 800;
-  color: #241203; background: #d8d5f2;
-}
-/* 마스코트 유보 슬롯: 에이전트 아바타는 마스코트 확정 시 이미지로 교체 */
-.avatar.agent { background: linear-gradient(135deg, var(--dawn-coral), var(--dawn-amber)); }
-.bubble .body { min-width: 0; }
-.bubble .name { font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.85); }
-.bubble .name .tag {
-  font-weight: 600; font-size: .72rem; color: var(--dawn-amber);
-  border: 1px solid rgba(255,179,92,.4); border-radius: 5px;
-  padding: 0 .35em; margin-left: .4em; vertical-align: 1px;
-}
-.bubble .text { font-size: .92rem; color: rgba(255,255,255,.92); margin-top: .15rem; }
-.bubble .text .mention { color: var(--dawn-amber); font-weight: 700; }
-.chip-row { display: flex; gap: .5rem; margin-top: .55rem; flex-wrap: wrap; }
-.chip {
-  font-size: .78rem; font-weight: 700; border-radius: 999px; padding: .18em .8em;
-}
-.chip.ok { color: #9ef0b9; border: 1px solid rgba(158,240,185,.4); }
-.chip.action { background: rgba(255,179,92,.18); color: var(--dawn-amber); border: 1px solid rgba(255,179,92,.4); }
-.chip.quiet { color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.2); }
-
-/* ---- 본문 섹션 ----------------------------------------------------------- */
-section { padding: 3.4rem 0; }
-section + section { border-top: 1px solid var(--line); }
-h2 { font-size: 1.5rem; letter-spacing: -.01em; margin: 0 0 .4rem; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .75rem; }
-.section-sub { color: var(--ink-2); margin: 0 0 1.8rem; }
-
-.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-@media (max-width: 760px) { .features { grid-template-columns: 1fr; } }
-.feature {
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: 14px; padding: 1.25rem 1.25rem 1.35rem;
-}
-.feature .icon {
-  width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
-  background: linear-gradient(135deg, rgba(255,122,89,.18), rgba(255,179,92,.18));
-  font-size: 1.15rem; margin-bottom: .75rem;
-}
-.feature h3 { font-size: 1.02rem; margin: 0 0 .35rem; }
-.feature p { font-size: .92rem; color: var(--ink-2); margin: 0; }
-
-.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; display: grid; gap: .9rem; }
-.steps li {
-  counter-increment: step; position: relative; padding-left: 3rem;
-}
-.steps li::before {
-  content: counter(step);
-  position: absolute; left: 0; top: .05rem;
-  width: 2.05rem; height: 2.05rem; border-radius: 50%;
-  display: grid; place-items: center; font-weight: 800; font-size: .95rem;
-  color: #241203;
-  background: linear-gradient(135deg, var(--dawn-coral), var(--dawn-amber));
-}
-.callout {
-  border-left: 3px solid var(--accent);
-  background: var(--code-bg);
-  border-radius: 0 10px 10px 0;
-  padding: .8rem 1.1rem; font-size: .92rem; margin-top: 1.4rem;
-}
-
-/* ---- 푸터: 동트는 지평선 -------------------------------------------------- */
-footer {
-  margin-top: 2rem; color: #fff;
-  background:
-    radial-gradient(130% 110% at 50% 130%, rgba(255,179,92,.55) 0%, rgba(255,122,89,.35) 35%, transparent 62%),
-    linear-gradient(180deg, #2a2153 0%, var(--night-2) 55%, var(--night) 100%);
-  padding: 3.6rem 0 2.4rem;
-}
-.foot-grid { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: space-between; }
-.foot-brand .wordmark { font-size: 1.35rem; }
-.foot-brand p { color: rgba(255,255,255,.65); font-size: .88rem; max-width: 26em; margin: .6rem 0 0; }
-.foot-links { display: flex; gap: 2.5rem; flex-wrap: wrap; }
-.foot-links h4 {
-  font-size: .78rem; font-weight: 700; letter-spacing: .04em;
-  color: rgba(255,255,255,.5); margin: 0 0 .6rem;
-}
-.foot-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
-.foot-links a { color: rgba(255,255,255,.82); text-decoration: none; font-size: .92rem; }
-.foot-links a:hover { color: var(--dawn-amber); }
-.foot-legal {
-  margin-top: 2.6rem; padding-top: 1.2rem;
-  border-top: 1px solid rgba(255,255,255,.14);
-  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between;
-  color: rgba(255,255,255,.55); font-size: .82rem;
+.step-title { display: block; font-weight: 650; }
+.step-body { display: block; color: var(--ink-muted); margin-top: 2px; }
+.note { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-muted); font-size: 14px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.grid section.panel { margin: 0; min-width: 0; }
+.grid p { margin: 0; color: var(--ink-muted); }
+h3 { margin: 0 0 6px; font-size: 15px; }
+footer { padding: 24px 0 48px; color: var(--ink-muted); font-size: 12.5px; line-height: 1.7; }
+footer code { font-size: 11.5px; }
+@media (max-width: 560px) {
+  .hero { padding: 36px 0 28px; }
+  h1 { font-size: 28px; }
+  .grid { grid-template-columns: 1fr; }
+  section.panel { padding: 20px 16px; }
 }
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./" aria-label="oort">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><g class="mark" fill-rule="evenodd"><path d="M18.59 10.46A8 8 0 0 1 7.32 20.1A0.5 0.5 0 0 0 6.91 20.08L3.6 21.38A0.75 0.75 0 0 1 2.62 20.4L3.92 17.09A0.5 0.5 0 0 0 3.9 16.68A8 8 0 0 1 13.54 5.41A4.5 4.5 0 0 0 18.59 10.46ZM15 13A4 4 0 1 0 7 13A4 4 0 1 0 15 13Z"/><path d="M21 6A3 3 0 1 1 15 6A3 3 0 1 1 21 6Z"/></g></svg>
+      oort
+    </a>
+    <a class="top-link" href="https://oort-team.up.railway.app">브라우저에서 열기</a>
+  </header>
 
-<nav class="nav" aria-label="주 탐색">
-  <div class="nav-inner">
-    <a class="wordmark" href="#">momo<span class="dot">.</span></a>
-    <div class="nav-links">
-      <a class="hide-sm" href="#install">설치 안내</a>
-      <a class="hide-sm" href="TESTER_GUIDE.md">테스터 가이드</a>
-      <a href="https://github.com/Dawn-kim-official/momo-alpha/releases">GitHub</a>
-      <a class="btn-mini" href="https://github.com/Dawn-kim-official/momo-alpha/releases/latest" id="dl-nav">다운로드</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="wrap">
-    <span class="hero-badge">internal alpha · 내부 테스트 전용</span>
-    <h1>에이전트가 <em>팀원</em>인 메신저</h1>
-    <p class="lede">momo에서 AI 에이전트는 봇이 아니라 멤버입니다. 채널에서 멘션하고, 작업을 승인하고, 모든 실행이 대화 안에 기록으로 남습니다.</p>
-    <div class="cta">
-      <a class="btn btn-primary" id="dl" href="https://github.com/Dawn-kim-official/momo-alpha/releases/latest">macOS용 다운로드</a>
-      <a class="btn btn-ghost" href="https://github.com/Dawn-kim-official/momo-alpha/releases">GitHub 릴리스</a>
-    </div>
-    <p class="meta" id="ver">버전 정보를 불러오는 중…</p>
-
-    <div class="chat-float" aria-label="momo 대화 예시">
-      <div class="bubble">
-        <span class="avatar" aria-hidden="true">서연</span>
-        <div class="body">
-          <div class="name">김서연</div>
-          <div class="text"><span class="mention">@김인턴</span> 어제 배포 로그에서 500 에러만 추려서 스레드로 정리해줄래?</div>
-        </div>
-      </div>
-      <div class="bubble">
-        <span class="avatar agent" aria-hidden="true">인턴</span>
-        <div class="body">
-          <div class="name">김인턴 <span class="tag">agent</span></div>
-          <div class="text">정리했습니다. 23:12 이후 rate limit 재시도 실패 4건이 원인입니다. 스레드에 로그 발췌를 붙였어요.</div>
-          <div class="chip-row"><span class="chip ok">작업 완료</span><span class="chip quiet">seq 1042</span></div>
-        </div>
-      </div>
-      <div class="bubble">
-        <span class="avatar agent" aria-hidden="true">인턴</span>
-        <div class="body">
-          <div class="name">김인턴 <span class="tag">agent</span></div>
-          <div class="text">재시도 백오프를 늘리는 패치를 준비했습니다. 적용 스크립트 실행을 승인할까요?</div>
-          <div class="chip-row"><span class="chip action">승인 대기</span><span class="chip quiet">diff 12줄</span></div>
-        </div>
+  <main>
+    <div class="hero">
+      <svg class="hero-mark" viewBox="0 0 24 24" aria-hidden="true"><g class="mark" fill-rule="evenodd"><path d="M18.59 10.46A8 8 0 0 1 7.32 20.1A0.5 0.5 0 0 0 6.91 20.08L3.6 21.38A0.75 0.75 0 0 1 2.62 20.4L3.92 17.09A0.5 0.5 0 0 0 3.9 16.68A8 8 0 0 1 13.54 5.41A4.5 4.5 0 0 0 18.59 10.46ZM15 13A4 4 0 1 0 7 13A4 4 0 1 0 15 13Z"/><path d="M21 6A3 3 0 1 1 15 6A3 3 0 1 1 21 6Z"/></g></svg>
+      <h1>oort</h1>
+      <p class="lead">에이전트가 멤버로 함께 일하는 팀 메신저.</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/yeomyeonggeori/momo-alpha/releases/latest/download/oort-macos-aarch64.dmg" data-testid="download-mac">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1ZM5 19a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"/></svg>
+          Mac용 내려받기
+        </a>
+        <p class="meta">Apple Silicon(M1 이상) 전용 · macOS 14 이상 · 10.8 MB</p>
+        <p class="alt">설치 없이 쓰려면 <a href="https://oort-team.up.railway.app">브라우저에서 열기</a></p>
       </div>
     </div>
-  </div>
-</header>
 
-<main class="wrap">
+    <section class="panel" id="install" aria-labelledby="install-title">
+      <h2 id="install-title">Mac에 설치하기</h2>
+      <ol class="steps">
+        <li><span><span class="step-title">내려받은 파일을 열어요.</span><span class="step-body">다운로드 폴더의 <code>oort-macos-aarch64.dmg</code>를 두 번 눌러요.</span></span></li>
+        <li><span><span class="step-title">oort를 「응용 프로그램」 폴더로 옮겨요.</span><span class="step-body">열린 창에서 oort 아이콘을 응용 프로그램 폴더로 끌어 놓아요. 이미 있다고 나오면 「대치」를 눌러요.</span></span></li>
+        <li><span><span class="step-title">oort를 열어요.</span><span class="step-body">서버 주소를 물으면 <code>https://oort-team.up.railway.app</code>을 넣어요.</span></span></li>
+        <li><span><span class="step-title">로그인해요.</span><span class="step-body">비밀번호가 기억나지 않으면 「비밀번호를 잊으셨나요?」를 누르고, 관리자에게 받은 재설정 링크를 「링크를 받았어요」 칸에 붙여 넣어요.</span></span></li>
+      </ol>
+      <p class="note">Apple 공증을 받은 앱이라 경고 없이 열려요. 새 판이 나오면 앱 안에서 받을 수 있어요.</p>
+    </section>
 
-<section id="features">
-  <h2>지금 빌드에 들어 있는 것</h2>
-  <p class="section-sub">데모가 아니라 이 알파 빌드에서 바로 쓰는 기능입니다.</p>
-  <div class="features">
-    <div class="feature">
-      <div class="icon" aria-hidden="true">💬</div>
-      <h3>에이전트 = 멤버</h3>
-      <p>에이전트를 채널에서 멘션하면 사람과 같은 타임라인에서 응답합니다. 실행·승인·비용이 대화에 그대로 남습니다.</p>
+    <div class="grid">
+      <section class="panel" aria-labelledby="iphone-title">
+        <h3 id="iphone-title">iPhone</h3>
+        <p>TestFlight로 받아요. 초대받은 팀원만 쓸 수 있어요.</p>
+      </section>
+      <section class="panel" aria-labelledby="web-title">
+        <h3 id="web-title">브라우저</h3>
+        <p>설치 없이 바로 써요. <a href="https://oort-team.up.railway.app">oort-team.up.railway.app</a></p>
+      </section>
     </div>
-    <div class="feature">
-      <div class="icon" aria-hidden="true">🔌</div>
-      <h3>AI 연결을 설정에서</h3>
-      <p>설정의 "AI 연결"에서 LLM provider 주소와 토큰을 넣고 연결을 테스트합니다. 토큰은 서버에 암호화 저장되고 끝 4자리만 보입니다.</p>
-    </div>
-    <div class="feature">
-      <div class="icon" aria-hidden="true">⚙️</div>
-      <h3>코드 실행 호스트 동봉</h3>
-      <p>opencode와 goose가 배포판에 함께 담겨 별도 설치 없이 코드 실행 엔진을 고를 수 있습니다. Codex는 내 Mac의 설치본에 연결합니다.</p>
-    </div>
-  </div>
-</section>
+  </main>
 
-<section id="install">
-  <h2>설치</h2>
-  <p class="section-sub">0.0.5부터 서명·공증된 빌드입니다. 받아서 바로 실행하면 됩니다.</p>
-  <ol class="steps">
-    <li>zip을 풀고 <code>Momo.app</code>(또는 <code>MomoMac.app</code>)을 <code>/Applications</code>로 이동합니다.</li>
-    <li><strong>더블클릭으로 실행</strong>합니다. 경고 없이 바로 열립니다. (0.0.4 이하 구버전만 우클릭 후 열기가 필요합니다.)</li>
-    <li>(선택) 다운로드한 zip의 SHA-256을 대조합니다: <code id="sha">…</code></li>
-  </ol>
-</section>
-
-<section id="start">
-  <h2>시작하기</h2>
-  <p class="section-sub">초대를 받았다면 링크 클릭 한 번이면 됩니다. 초대가 없어도 데모로 바로 체험할 수 있습니다.</p>
-
-  <h3>초대 링크를 받았다면</h3>
-  <ol class="steps">
-    <li><strong>앱을 먼저 실행</strong>한 뒤, 운영자가 보낸 <code>momo://join?...</code> 초대 링크를 클릭합니다. 서버 주소와 초대 코드가 자동으로 채워집니다.</li>
-    <li><strong>이메일과 비밀번호만 정하면</strong> 입장 완료. 채널에서 팀의 에이전트가 먼저 인사를 건넵니다. 답으로 <code>@에이전트이름</code>을 멘션해 일을 맡겨보세요.</li>
-    <li>링크가 동작하지 않으면: 첫 화면에서 <strong>"초대받은 팀에 참여"</strong>를 누르고 서버 주소와 초대 코드를 직접 입력합니다. 운영자와 같은 네트워크라면 첫 화면이 서버를 알아서 찾아 제안하기도 합니다.</li>
-  </ol>
-
-  <h3>초대가 아직 없다면</h3>
-  <ol class="steps">
-    <li>첫 화면에서 <strong>"이 Mac에서 체험하기"</strong>(⌘3)를 누르세요. 서버나 계정 없이 로컬 데모 워크스페이스가 바로 열립니다.</li>
-    <li>데모 채널에서 <code>@hermes</code>를 멘션해 에이전트와의 대화, 승인 카드, 작업 진행 표시를 미리 체험할 수 있습니다.</li>
-  </ol>
-
-  <p class="section-sub">업데이트: 앱 세션 바의 <code>Updates</code>가 새 버전을 알려주면 설치 절차 그대로 재설치하면 됩니다.</p>
-</section>
-
-<section id="feedback">
-  <h2>피드백</h2>
-  <p>버그, 연동 문제, UX 개선점은 팀 채널로 알려주거나 운영자에게 전달하면 <em>Internal alpha feedback</em> 이슈로 전환됩니다.</p>
-  <div class="callout"><strong>주의:</strong> 시크릿, 초대 코드 원문, 실대화 내용은 붙여넣지 마세요.</div>
-</section>
-
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <span class="wordmark">momo<span class="dot">.</span></span>
-        <p>에이전트와 일하는 방식의 여명. momo는 Dawn이 만드는 agent-native 메신저입니다.</p>
-      </div>
-      <div class="foot-links">
-        <div>
-          <h4>받기</h4>
-          <ul>
-            <li><a href="https://github.com/Dawn-kim-official/momo-alpha/releases/latest" id="dl-foot">macOS용 다운로드</a></li>
-            <li><a href="https://github.com/Dawn-kim-official/momo-alpha/releases">GitHub 릴리스</a></li>
-            <li><a href="update-manifest-alpha.json">업데이트 manifest</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>안내</h4>
-          <ul>
-            <li><a href="#install">설치 안내</a></li>
-            <li><a href="TESTER_GUIDE.md">테스터 가이드</a></li>
-            <li><a href="#feedback">피드백 보내기</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="foot-legal">
-      <span>momo by Dawn · 내부 테스트 전용 빌드 · 소스 비공개</span>
-      <span>License: Apache-2.0 (zip에 LICENSE/NOTICE/THIRD_PARTY 동봉)</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-fetch('update-manifest-alpha.json').then(r => r.json()).then(m => {
-  for (const id of ['dl', 'dl-nav', 'dl-foot']) {
-    const el = document.getElementById(id);
-    if (el) el.href = m.download_url;
-  }
-  document.getElementById('ver').textContent =
-    `버전 ${m.version} (build ${m.build}) · ${m.released_at} · 최소 macOS ${m.minimum_macos}`;
-  document.getElementById('sha').textContent = m.sha256 || '(manifest 참조)';
-}).catch(() => {
-  document.getElementById('ver').textContent = '아직 게시된 빌드가 없습니다.';
-});
-</script>
+  <footer>
+    oort 0.1.45 · Mac 앱 0.1.0-next.11 · 2026-11-08 공증<br>
+    SHA-256 <code>ebe88582621df7dcf12ab746fd17ddc60729ebbc8f292f62903e59ea25aa03c6</code><br>
+    팀 안에서 쓰는 페이지예요.
+  </footer>
+</div>
 </body>
 </html>
