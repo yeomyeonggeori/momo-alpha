@@ -1,11 +1,11 @@
 {
-  "version": "0.1.43-staging.2",
-  "notes": "oort 0.1.43 스테이징 증거 빌드 - 업데이트 갱신 시험용(라이브 채널 아님)",
-  "pub_date": "2026-11-06T11:57:11Z",
+  "version": "0.1.46-staging.2",
+  "notes": "oort 0.1.46 스테이징 증거 빌드 - 업데이트 갱신 시험용(라이브 채널 아님)",
+  "pub_date": "2026-11-13T09:08:13Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUTlpTbEgxMHR2ZW8wSXBueDFCOUtYdk9SKzF2TGFuMDJNUlMveDhOVFg4ci9JOEZFMTM0cG8rZzVOYVZKOTZlelVZVWd4VWl5bVI5ZXN4VWppdGNEb2s1ZEtzejJPTWdBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzOTY2MTk1CWZpbGU6b29ydC0wLjEuNDMtc3RhZ2luZy4yLWRhcndpbi1hYXJjaDY0LmFwcC50YXIuZ3oKOTRnQVJXK2ZKeWVhRm5SWVRsbDFGalhIR3dpQ3pQK2NlM3c1aDZyZjd2SWM1czBWNlZ4bG9jczNUQ0Y0NzZFNXgxeEJ4RFMyem5rNjZ0eTBIb09ZQUE9PQo=",
-      "url": "https://yeomyeonggeori.github.io/momo-alpha/staging/oort-0.1.43-staging.2-darwin-aarch64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUTlpTbEgxMHR2ZXU5eW11bS80Zm9rWi9UbmFsUGJuVWNZTlRwZVNWZTVjVGlwMHZQY29ZZWc0bTVLYmV6YiszN3NnVlY4YWJhdDJiQ1pwaDBYMTR6MEphZ2ZDR0d3UHdBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTYwODA0CWZpbGU6b29ydC0wLjEuNDYtc3RhZ2luZy4yLWRhcndpbi1hYXJjaDY0LmFwcC50YXIuZ3oKbGpZa3A0QU9CR3VqODJhOW9Rb2dGc0NmSm5aR2NzTmN1YytXTGNHZ2FLZGpWNHhqMUM3L0daUGdsQmwyUzdMV3g3SlZleVR2NlNIYXdITGczdnF1QWc9PQo=",
+      "url": "https://yeomyeonggeori.github.io/momo-alpha/staging/oort-0.1.46-staging.2-darwin-aarch64.app.tar.gz"
     }
   }
 }
