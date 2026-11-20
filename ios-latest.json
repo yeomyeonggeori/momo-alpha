@@ -1,7 +1,7 @@
 {
   "ios": {
-    "latest_build": 3080,
-    "version": "0.1.47",
+    "latest_build": 3063,
+    "version": "0.1.46",
     "testflight": true
   }
 }
