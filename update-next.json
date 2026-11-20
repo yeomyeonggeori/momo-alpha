@@ -1,11 +1,15 @@
 {
-  "version": "0.1.0-next.10",
-  "notes": "ADR-0134·0135 통합 — 요청 단위 model·effort 라우팅, 프로바이더 캐스캐이드 체인, 잔여량 게이지 (MOMO-621~628)",
-  "pub_date": "2026-07-26T15:24:36Z",
+  "version": "0.1.47",
+  "notes": "공개 채널을 둘러보고 스스로 참여하고, 사람끼리의 1:1 대화에서 나가고, 채널 이름을 한글로 짓고 바꿀 수 있어요.",
+  "pub_date": "2026-11-19T15:37:11Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUTlpTbEgxMHR2ZXYyU1lyVXNGVDJtVk90THpWQS9vMjlMMHNWSWNWaU10T1lDelZTNktQNGN4NXRhd2VuUDBTYUJjWk1OR2dYQ3pMcXR6M2FMVW8vdWdYbEtWS0xOZHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg1MDc5NDcxCWZpbGU6bW9tby1uZXh0LTAuMS4wLW5leHQuMTAtZGFyd2luLWFhcmNoNjQuYXBwLnRhci5nego5bE1MV2s3UmxsMUtEVjVQemVzTWlJVWt6V0pZMlRDTC9UaXhFUUVHZG1ZWkxXNnIzR3JUNVFJcFRIQk5EeHJ0eW1OLytWc05ra0hPaGI1aWxyMFlEZz09Cg==",
-      "url": "https://github.com/Dawn-kim-official/momo-alpha/releases/download/next-v0.1.0-next.10/momo-next-0.1.0-next.10-darwin-aarch64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUTlpTbEgxMHR2ZWphYjUzS29xMXd5b2pwWW1iNGErZnEvZ3YzSzMrSStmWjV6cWdpbVBaVG1VdTBjci8vZy9iUjVJbDdOYjM0ME5Sb2FMUGVCL1ZGNEEwWkdERkVWOXdvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MTAxNzk5CWZpbGU6b29ydC0wLjEuNDctZGFyd2luLWFhcmNoNjQuYXBwLnRhci5negp1Z2FxOSsxWnc3QmlEbklYdzJ6TGZKclhRNVpOSy9uVG5WU0I2NnkwbU9URXdzakRTQ0JleVhFZ3JkZjRXc0xOcEpBSU00UGhlN1NKakFGZ05YZ25BUT09Cg==",
+      "url": "https://github.com/yeomyeonggeori/momo-alpha/releases/download/mac-v0.1.47/oort-0.1.47-darwin-aarch64.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUTlpTbEgxMHR2ZXA2OFZTM2ZHcTdOcWh3OVdPWXZaTVFjaXJIQ1FkcGVzam5iY0EvMHhSZHZackRHUk1TZkczNXZvMGtCQTNBTDZjZEEzNTJRWEJyb1JBWklrUFNjd0FvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MTAyNTEzCWZpbGU6b29ydC0wLjEuNDctZGFyd2luLXg4Nl82NC5hcHAudGFyLmd6CndKMjN5eUhlMC9TR3ZwUm43MjJFWG1vOS82T1pOZGMyWUZWY0lzL3F1dWEwaUwzdXpJMWttTUE0VzhDdG0rajNLMGRtWTVlSnZVazdKeG9EYXUxaEJnPT0K",
+      "url": "https://github.com/yeomyeonggeori/momo-alpha/releases/download/mac-v0.1.47/oort-0.1.47-darwin-x86_64.app.tar.gz"
     }
   }
 }
